@@ -132,7 +132,6 @@ void StartFinish()
     return;
   }
   SendCmd(NEXTION_PAGES[PG_FIXED]);
-  LeftGenerator();
   AllNeoOn(BLUE);
   ptrCurrentMode = WaitFunc;
 }

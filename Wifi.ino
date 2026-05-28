@@ -43,7 +43,6 @@ void DataChanged()
         BlinkTimer.deleteTimer(blinkTimerId);
         Serial.println("Generator Fixed!");
         SendCmd(NEXTION_PAGES[PG_FIXED]);
-        LeftGenerator();
         AllNeoOn(BLUE);
         ledcWrite(MOTOR_PWMA_PIN, 250);
         ptrCurrentMode = WaitFunc;

@@ -36,32 +36,14 @@ void SendCmd(String command)
     sendCommand(cmd.c_str());
 }
 void LeftGenerator(){
+    int gen = (int)my["left_generator"];
+    if (gen < 1 || gen > 5) return;
 
-    if((int)my["left_generator"] == 5)
-    {
-        sendCommand("pleftDevice.pic=168");
-        Serial.println("left Generator 5");
-    }
-    else if((int)my["left_generator"] == 4)
-    {
-        sendCommand("pleftDevice.pic=169");
-        Serial.println("left Generator 4");
-    }
-    else if((int)my["left_generator"] == 3)
-    {
-        sendCommand("pleftDevice.pic=170");
-        Serial.println("left Generator 3");
-    }
-    else if((int)my["left_generator"] == 2)
-    {
-        sendCommand("pleftDevice.pic=171");
-        Serial.println("left Generator 2");
-    }
-    else if((int)my["left_generator"] == 1)
-    {
-        sendCommand("pleftDevice.pic=172");
-        Serial.println("left Generator 1");
-    }
+    int offset = ((String)(const char *)shift_machine["selected_language"] == "EN") ? 7 : 0;
+    int pic = 168 + (5 - gen) + offset;
+
+    sendCommand(("pleftDevice.pic=" + String(pic)).c_str());
+    Serial.println("left Generator " + String(gen));
 }
 void BatteryPackSend(){
     if((String)(const char*)my["battery_pack"] == "0")
