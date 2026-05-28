@@ -20,7 +20,6 @@ void DataChanged()
   } 
   if((String)(const char*)my["left_generator"] != (String)(const char*)cur["left_generator"]){
     if((String)(const char*)my["device_state"] == "repaired"){
-      SendCmd(NEXTION_PAGES[PG_FIXED]);
       LeftGenerator();
     }
   }
@@ -43,6 +42,7 @@ void DataChanged()
         BlinkTimer.deleteTimer(blinkTimerId);
         Serial.println("Generator Fixed!");
         SendCmd(NEXTION_PAGES[PG_FIXED]);
+        LeftGenerator();
         AllNeoOn(BLUE);
         ledcWrite(MOTOR_PWMA_PIN, 250);
         ptrCurrentMode = WaitFunc;
