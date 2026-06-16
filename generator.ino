@@ -15,7 +15,7 @@
  *
  */
 
-#define FIRMWARE_VER 16
+#define FIRMWARE_VER 2
 #include "generator.h"
 
 void setup() {
@@ -29,11 +29,11 @@ void setup() {
     has2wifi.Setup("badland");
     ota.setLogStream(Serial);
     ota.setOnSuccess([]() {
-        has2wifi.Send((String)(const char*)my["device_name"], "game_state", "setting");
+        has2wifi.Send((String)(const char*)my["device_name"], "device_state", "setting");
         Serial.println("[OTA] ✅ 업데이트 성공! 재부팅합니다...");
     });
     ota.setOnSkip([]() {
-        has2wifi.Send((String)(const char*)my["device_name"], "game_state", "setting");
+        has2wifi.Send((String)(const char*)my["device_name"], "device_state", "setting");
         Serial.println("[OTA] 이미 최신 버전입니다.");
     });
     ptrCurrentMode = WaitFunc;
