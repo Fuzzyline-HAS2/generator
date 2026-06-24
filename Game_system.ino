@@ -41,6 +41,6 @@ void StarterActivate(){
         NeoLightColor(STARTER, color[GREEN]);
         GameTimer.deleteTimer(gameTimerId);        //게임 타이머 종료
         BlinkTimer.deleteTimer(blinkTimerId);
-        BlinkTimerStart(CIRCUIT, YELLOW);
+        NeoLightColor(CIRCUIT, color[BLUE]);
     }
 }
