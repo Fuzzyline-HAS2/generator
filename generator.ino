@@ -15,7 +15,8 @@
  *
  */
 
-#define FIRMWARE_VER 3
+#define FIRMWARE_VER 4
+#define PARTITION_VER 1
 #include "generator.h"
 
 void setup() {
@@ -27,6 +28,7 @@ void setup() {
     NextionInit();
     TimerInit();
     has2wifi.Setup("badland");
+    has2wifi.Send((String)(const char*)my["device_name"], "esp_version", String(FIRMWARE_VER));
     ota.setLogStream(Serial);
     ota.setOnSuccess([]() {
         has2wifi.Send((String)(const char*)my["device_name"], "device_state", "setting");
@@ -36,6 +38,12 @@ void setup() {
         has2wifi.Send((String)(const char*)my["device_name"], "device_state", "setting");
         Serial.println("[OTA] 이미 최신 버전입니다.");
     });
+    ota.setPartitionUpdate(
+        "https://raw.githubusercontent.com/Fuzzyline-HAS2/generator/third_store/partitions.bin",
+        "https://raw.githubusercontent.com/Fuzzyline-HAS2/generator/third_store/partitions.sig",
+        "https://raw.githubusercontent.com/Fuzzyline-HAS2/generator/third_store/partition_version.txt",
+        PARTITION_VER
+    );
     ptrCurrentMode = WaitFunc;
     ptrRfidMode = WaitFunc;
     DataChanged();
