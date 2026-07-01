@@ -7,7 +7,8 @@ void DataChanged()
   if(my["brightness"].as<int>() != cur["brightness"].as<int>()) {
     UpdateBrightness();
   }
-  if((String)(const char*)my["game_state"] != (String)(const char*)cur["game_state"]){
+  bool gameStateChanged = (String)(const char*)my["game_state"] != (String)(const char*)cur["game_state"];
+  if(gameStateChanged){
     if((String)(const char*)my["game_state"] == "setting"){
       SettingFunc();
     }
@@ -24,7 +25,19 @@ void DataChanged()
     }
   }
   if(receiveMineOn == false){
-    if((String)(const char*)my["device_state"] != (String)(const char*)cur["device_state"]){  
+    if(gameStateChanged == false && cur.containsKey("battery_pack") && (String)(const char*)my["game_state"] == "activate" && (int)my["battery_pack"] != (int)cur["battery_pack"]){
+      unsigned long batteryAnimationStart = millis();
+      BatteryPackSend();
+      if((int)my["battery_pack"] == (int)my["max_battery_pack"]){
+        unsigned long elapsed = millis() - batteryAnimationStart;
+        if(elapsed < batteryAnimationTime){
+          delay(batteryAnimationTime - elapsed);
+        }
+        receiveMineOn = true;
+        BatteryFinish();
+      }
+    }
+    if(receiveMineOn == false && (String)(const char*)my["device_state"] != (String)(const char*)cur["device_state"]){
       if((String)(const char*)my["device_state"] == "repaired_all"){ 
         ptrRfidMode = WaitFunc;
         ptrCurrentMode = WaitFunc;

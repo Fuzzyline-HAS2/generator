@@ -46,27 +46,28 @@ void LeftGenerator(){
     Serial.println("left Generator " + String(gen));
 }
 void BatteryPackSend(){
-    if((String)(const char*)my["battery_pack"] == "0")
+    int batteryPack = (int)my["battery_pack"];
+    if(batteryPack == 0)
     {
         sendCommand("tBattery0.en=0");
     }
-    else if((String)(const char*)my["battery_pack"] == "1")
+    else if(batteryPack == 1)
     {
         sendCommand("tBattery0.en=1");
     }
-    else if((String)(const char*)my["battery_pack"] == "2")
+    else if(batteryPack == 2)
     {
         sendCommand("tBattery1.en=1");
     }
-    else if((String)(const char*)my["battery_pack"] == "3")
+    else if(batteryPack == 3)
     {
         sendCommand("tBattery2.en=1");
     }
-    else if((String)(const char*)my["battery_pack"] == "4")
+    else if(batteryPack == 4)
     {
         sendCommand("tBattery3.en=1");
     }
-    else if((String)(const char*)my["battery_pack"] == "5")
+    else if(batteryPack == 5)
     {
         sendCommand("vBatteryPack.val=5");
     }

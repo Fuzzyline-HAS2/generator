@@ -54,6 +54,7 @@ unsigned long wifiTime = 2000;    // 1sec
 
 unsigned long gameTime = 400;    // 3sec
 unsigned long blinkTime = 1800;   // 1sec
+const unsigned long batteryAnimationTime = 2000;
 
 
 volatile unsigned int gameTimerCnt;
