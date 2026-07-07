@@ -15,7 +15,7 @@
  *
  */
 
-#define FIRMWARE_VER 7
+#define FIRMWARE_VER 8
 #define PARTITION_VER 1
 #include "generator.h"
 
