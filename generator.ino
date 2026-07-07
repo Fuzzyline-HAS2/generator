@@ -15,7 +15,7 @@
  *
  */
 
-#define FIRMWARE_VER 9
+#define FIRMWARE_VER 10
 #define PARTITION_VER 1
 #include "generator.h"
 
@@ -49,6 +49,7 @@ void setup() {
     DataChanged();
 }
 void loop() {
+    EncoderLoop();
     ptrCurrentMode();
     TimerRun();
 }
