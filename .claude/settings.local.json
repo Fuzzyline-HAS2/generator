@@ -8,7 +8,14 @@
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
       "Bash(git push *)",
-      "Bash(git branch *)"
+      "Bash(git branch *)",
+      "PowerShell(\\(Get-Command arduino-cli -ErrorAction SilentlyContinue\\).Source)",
+      "PowerShell(Test-Path *)",
+      "PowerShell(Get-ChildItem *)",
+      "PowerShell(& \"C:\\\\Users\\\\이효주\\\\AppData\\\\Local\\\\Programs\\\\Arduino IDE\\\\resources\\\\app\\\\lib\\\\backend\\\\resources\\\\arduino-cli.exe\" compile --fqbn esp32:esp32:ttgo-t1 \"C:\\\\Users\\\\이효주\\\\Hide_and_Seek\\\\generator\" --warnings default)",
+      "PowerShell(& \"C:\\\\Users\\\\이효주\\\\AppData\\\\Local\\\\Programs\\\\Arduino IDE\\\\resources\\\\app\\\\lib\\\\backend\\\\resources\\\\arduino-cli.exe\" compile --fqbn esp32:esp32:ttgo-t1 \"C:\\\\Users\\\\이효주\\\\Hide_and_Seek\\\\generator\" --library \"C:\\\\Users\\\\이효주\\\\Hide_and_Seek\\\\SecureOTA\" 2>$null; \"EXIT=$LASTEXITCODE\")",
+      "PowerShell(git *)",
+      "PowerShell(& \"C:\\\\Users\\\\이효주\\\\AppData\\\\Local\\\\Programs\\\\Arduino IDE\\\\resources\\\\app\\\\lib\\\\backend\\\\resources\\\\arduino-cli.exe\" compile --fqbn esp32:esp32:ttgo-t1 \"C:\\\\Users\\\\이효주\\\\Hide_and_Seek\\\\generator\" --library \"C:\\\\Users\\\\이효주\\\\Hide_and_Seek\\\\SecureOTA\" --build-path \"C:\\\\Users\\\\Public\\\\gen_build\" --warnings none)"
     ]
   }
 }

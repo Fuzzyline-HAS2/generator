@@ -1,6 +1,8 @@
 void StarterActivate(){
     // RFID 체크는 200ms마다만 수행 (블로킹으로 인한 루프 지연 방지)
     static bool tagOnReader = false;
+    static bool lastTagState = false;
+    static bool isPlayerTagged = false;
     static unsigned long lastRfidCheck = 0;
     if (millis() - lastRfidCheck >= 200){
         lastRfidCheck = millis();
@@ -10,31 +12,51 @@ void StarterActivate(){
         if (nfc[MAINPN532].sendCommandCheckAck(pn532_buf, 1)){
             if (nfc[MAINPN532].startPassiveTargetIDDetection(PN532_MIFARE_ISO14443A)){
                 tagOnReader = true;
+                if (!lastTagState) { // 새 태그가 올라왔을 때만 role 확인
+                    uint8_t data[32];
+                    if (nfc[MAINPN532].ntag2xx_ReadPage(7, data)){
+                        String tagUser = "";
+                        for(int i = 0; i < 4; i++) tagUser += (char)data[i];
+                        has2wifi.Receive(tagUser);
+                        isPlayerTagged = ((String)(const char*)tag["role"] == "player");
+                        Serial.println(isPlayerTagged ? "Starter: Player OK" : "Starter: Ghost Blocked");
+                    } else {
+                        isPlayerTagged = false;
+                    }
+                }
             }
         }
+        lastTagState = tagOnReader;
     }
-    // 태그 여부 관계없이 항상 게이지 표시 업데이트
-    // int gaugeNeoCnt = map(encoderValue,0,(starterNeoDivider),0,NumPixels[GAUGE]);
-    // int motorSpeed = map(encoderValue,0,(starterNeoDivider),0,255);
-    // Serial.println(String(encoderValue) + "___"+ String(gaugeNeoCnt) + "___" + String(motorSpeed));
+    // 게이지는 "칸"(엔코더 starterEncoderUnit당 1칸) 단위로만 변하므로
+    // 칸 수가 바뀌면 즉시 갱신하고, 그 외에는 500ms마다 재전송만 한다
+    // (깨진 프레임 자동 복구용). 전송 횟수를 줄이면 깨질 기회도 줄어든다.
+    static unsigned long lastGaugeUpdate = 0;
+    static int lastGaugeNeoCnt = -1;
     int gaugeNeoCnt = encoderValue / starterEncoderUnit;
-    EncoderNeopixelOn(gaugeNeoCnt);
+    if (gaugeNeoCnt != lastGaugeNeoCnt || millis() - lastGaugeUpdate >= 500){
+        lastGaugeUpdate = millis();
+        lastGaugeNeoCnt = gaugeNeoCnt;
+        EncoderNeopixelOn(gaugeNeoCnt);
+    }
 
-    if (!tagOnReader){
-        detachInterrupt(encoderPinA);
-        detachInterrupt(encoderPinB);
+    if (!tagOnReader || !isPlayerTagged){
+        EncoderDetach();
         EngineSpeeed(0);
         return;
     }
 
-    attachInterrupt(encoderPinA, updateEncoder, CHANGE);
-    attachInterrupt(encoderPinB, updateEncoder, CHANGE);
+    EncoderAttach();
 
-    Serial.println("raw: " + String(encoderValue));
+    // 디버그 출력은 1초에 한 번이면 충분
+    static unsigned long lastRawPrint = 0;
+    if (millis() - lastRawPrint >= 1000){
+        lastRawPrint = millis();
+        Serial.println("raw: " + String(encoderValue));
+    }
     EngineSpeeed(gaugeNeoCnt*8);
     if(gaugeNeoCnt >= NumPixels[GAUGE]){
-        detachInterrupt(encoderPinA);
-        detachInterrupt(encoderPinB);
+        EncoderDetach();
         // SendCmd("page pgFixed");
         StartFinish();
         BlinkTimer.deleteTimer(blinkTimerId);

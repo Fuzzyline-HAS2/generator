@@ -3,8 +3,8 @@
   "builtInLibrariesFolders": "C:\\ArduinoData\\libraries",
   "compiler.optimization_flags": "-Os",
   "customBuildProperties": "",
-  "fqbn": "esp32:esp32:ttgo-t1:UploadSpeed=921600,CPUFreq=240,FlashFreq=80,FlashMode=qio,FlashSize=4M,PartitionScheme=default,DebugLevel=none,EraseFlash=none",
-  "hardwareFolders": "C:\\ArduinoData\\packages\\esp32\\hardware\\esp32\\3.3.10,C:\\ArduinoData\\packages\\esp32\\hardware\\esp32\\3.3.10",
+  "fqbn": "esp32:esp32:ttgo-t1:UploadSpeed=115200,CPUFreq=240,FlashFreq=80,FlashMode=qio,FlashSize=4M,PartitionScheme=min_spiffs,DebugLevel=none,EraseFlash=none",
+  "hardwareFolders": "C:\\ArduinoData\\packages\\esp32\\hardware\\esp32\\3.3.11,C:\\ArduinoData\\packages\\esp32\\hardware\\esp32\\3.3.11",
   "otherLibrariesFolders": "c:\\ArduinoSketchbook\\libraries",
   "sketchLocation": "C:\\Users\\이효주\\Hide_and_Seek\\generator"
 }

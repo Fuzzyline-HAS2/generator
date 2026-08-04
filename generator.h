@@ -5,7 +5,7 @@
 const int rfid_num = 1; // 설치된 pn532의 개수
 
 //****************************************WIFI****************************************************************
-HAS2_Wifi has2wifi("http://172.30.1.43");
+HAS2_Wifi has2wifi("http://172.30.1.44");
 SecureOTA ota(
     "https://raw.githubusercontent.com/Fuzzyline-HAS2/generator/third_store/update.bin",
     "https://raw.githubusercontent.com/Fuzzyline-HAS2/generator/third_store/version.txt",
@@ -135,16 +135,13 @@ void EngineSpeeed(int enginePwm);
 void EngineStop();
 
 //****************************************ENCODER SETUP****************************************************************
+// 인터럽트(ISR) 대신 ESP32 하드웨어 펄스 카운터(PCNT) 사용
 void EncoderInit();
-long readEncoderValue(void);
-void updateEncoder();
+void EncoderAttach();   // 카운팅 시작
+void EncoderDetach();   // 카운팅 정지
+void EncoderLoop();     // 매 loop마다 하드웨어 카운터 → encoderValue 반영
+bool encoderAttached = false; // EncoderInit()에서 true로 전환
 
-volatile int lastEncoded = 0;       //직전 엔코더 값
-volatile long encoderValue = 0;     //현재 엔코더 값
-
-long lastencoderValue = 0;
-
-int lastMSB = 0;
-int lastLSB = 0;
+long encoderValue = 0;     //현재 엔코더 값
 
 #endif

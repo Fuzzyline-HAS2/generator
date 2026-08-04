@@ -1,7 +1,15 @@
+static void nxSend(const char* cmd)
+{
+    nexHwSerial.print(cmd);
+    nexHwSerial.write(0xff);
+    nexHwSerial.write(0xff);
+    nexHwSerial.write(0xff);
+}
+
 void NextionInit()
 {
-   nexInit();
    nexHwSerial.begin(9600, SERIAL_8N1, NEXTIONHWSERIAL_RX_PIN, NEXTIONHWSERIAL_TX_PIN);
+   delay(100);
 }
 
 void DisplayCheck()
@@ -17,8 +25,8 @@ void NextionReceived(String *nextion_string)
 {
  if (*nextion_string == "test")
  {
-   sendCommand("page pgItemTaken");
-   sendCommand("wQuizSolved.en=1");
+   nxSend("page pgItemTaken");
+   nxSend("wQuizSolved.en=1");
  }
 }
 
@@ -33,7 +41,7 @@ void SendCmd(String command)
     {
         cmd = command;
     }
-    sendCommand(cmd.c_str());
+    nxSend(cmd.c_str());
 }
 void LeftGenerator(){
     int gen = (int)my["left_generator"];
@@ -42,33 +50,33 @@ void LeftGenerator(){
     int offset = ((String)(const char *)shift_machine["selected_language"] == "EN") ? 7 : 0;
     int pic = 168 + (5 - gen) + offset;
 
-    sendCommand(("pleftDevice.pic=" + String(pic)).c_str());
+    nxSend(("pleftDevice.pic=" + String(pic)).c_str());
     Serial.println("left Generator " + String(gen));
 }
 void BatteryPackSend(){
     int batteryPack = (int)my["battery_pack"];
     if(batteryPack == 0)
     {
-        sendCommand("tBattery0.en=0");
+        nxSend("tBattery0.en=0");
     }
     else if(batteryPack == 1)
     {
-        sendCommand("tBattery0.en=1");
+        nxSend("tBattery0.en=1");
     }
     else if(batteryPack == 2)
     {
-        sendCommand("tBattery1.en=1");
+        nxSend("tBattery1.en=1");
     }
     else if(batteryPack == 3)
     {
-        sendCommand("tBattery2.en=1");
+        nxSend("tBattery2.en=1");
     }
     else if(batteryPack == 4)
     {
-        sendCommand("tBattery3.en=1");
+        nxSend("tBattery3.en=1");
     }
     else if(batteryPack == 5)
     {
-        sendCommand("vBatteryPack.val=5");
+        nxSend("vBatteryPack.val=5");
     }
 }

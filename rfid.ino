@@ -113,8 +113,7 @@ void BatteryFinish()
   gameTimerCnt = 0;
   gameTimerId = GameTimer.setInterval(gameTime,GameTimerFunc);
   AllNeoOn(BLUE);
-  attachInterrupt(encoderPinA, updateEncoder, CHANGE);
-  attachInterrupt(encoderPinB, updateEncoder, CHANGE);
+  EncoderAttach();
   delay(100);
   ptrCurrentMode = StarterActivate;
 }
@@ -142,47 +141,3 @@ void StartFinish()
   AllNeoOn(BLUE);
   ptrCurrentMode = WaitFunc;
 }
-
-// void BatteryPackCharge()
-// { 
-//   Serial.println("BatteryPackCharge PTRFUNC");
-//   LogoutTimer.deleteTimer(logoutTimerId);
-//   logoutTimerId = LogoutTimer.setInterval(wifiTime,LogoutTimerFunc);
-//   if(((int)tag["battery_pack"] + (int)my["battery_pack"]) <= (int)my["max_battery_pack"]){    //발전기에 필요한 배터리팩 개수 > 플레이어가 소지한 배터리팩 개수
-//     Serial.println("All Charged  " + ("+-" + (String)(const char*)tag["battery_pack"]));
-//     has2wifi.Send((String)(const char*)tag["device_name"], "battery_pack", ("-" + (String)(const char*)tag["battery_pack"]));
-//     has2wifi.Send((String)(const char*)my["device_name"], "battery_pack", ("+" + (String)(const char*)tag["battery_pack"]));
-//   }
-//   else if(((int)tag["battery_pack"] + (int)my["battery_pack"]) > (int)my["max_battery_pack"]){ //발전기에 필요한 배터리팩 개수 < 플레이어가 소지한 배터리팩 개수
-//     String numberString = String((int)my["max_battery_pack"] - (int)my["battery_pack"] );       //필요한 배터리팩만 충전하는 계산식
-//     Serial.println("Leftover Charged  " + ("+-" + numberString));
-//     has2wifi.Send((String)(const char*)tag["device_name"], "battery_pack", ("-" + numberString));
-//     has2wifi.Send((String)(const char*)my["device_name"], "battery_pack", ("+" + numberString));
-//   }
-//   else{
-//     Serial.println("Already Fully Charged");
-//   }
-//   delay(500);
-//   has2wifi.ReceiveMine();
-//   BatteryPackSend();
-//   delay(1000);
-//   if((int)my["battery_pack"] == (int)my["max_battery_pack"]){
-//     Serial.println("Battery Full!");              
-//     has2wifi.Send((String)(const char*)my["device_name"], "device_state", "battery_max"); //메인으로 전송
-//     AllNeoOn(GREEN);
-//     attachInterrupt(encoderPinA, updateEncoder, CHANGE);                                  
-//     attachInterrupt(encoderPinB, updateEncoder, CHANGE);
-//     encoderValue = 1;
-//     gameTimerId = GameTimer.setInterval(1000,GameTimerFunc);
-//     AllNeoOn(GREEN);
-//     SendCmd("page pgStarter");
-//     LeftGenerator();
-//     ptrCurrentMode = StarterActivate;
-//   }
-//   else if((int)my["battery_pack"] > (int)my["max_battery_pack"]){
-//     Serial.println("ERROR: Battery OverCharged!");
-//   }
-//   else{
-//     Serial.println("Not Charged Yet");
-//   }
-// }

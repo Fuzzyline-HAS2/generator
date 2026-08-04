@@ -103,8 +103,7 @@ void SettingFunc(void){
     AllNeoOn(WHITE);
     EngineStop();
     encoderValue = 100;
-    detachInterrupt(encoderPinA);
-    detachInterrupt(encoderPinB);
+    EncoderDetach();
     GameTimer.deleteTimer(gameTimerId);
 
     BlinkTimer.deleteTimer(blinkTimerId);
@@ -117,8 +116,7 @@ void ActivateFunc(void){
     AllNeoOn(YELLOW);
     SendCmd(NEXTION_PAGES[PG_UNLOCKED]);
     BatteryPackSend();
-    detachInterrupt(encoderPinA);
-    detachInterrupt(encoderPinB);
+    EncoderDetach();
     GameTimer.deleteTimer(gameTimerId);
     BlinkTimer.deleteTimer(blinkTimerId);
     nfc[MAINPN532].SAMConfig();
@@ -146,8 +144,7 @@ void ReadyFunc(void){
     Serial.println("READY");
     AllNeoOn(RED);
     SendCmd(NEXTION_PAGES[PG_PRE_TAGGER]);
-    detachInterrupt(encoderPinA);
-    detachInterrupt(encoderPinB);
+    EncoderDetach();
     GameTimer.deleteTimer(gameTimerId);
 
     BlinkTimer.deleteTimer(blinkTimerId);

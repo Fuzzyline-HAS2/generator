@@ -1,8 +1,6 @@
 #include <HAS2_Wifi.h>
-
-#include <HAS2_Wifi.h>
-
 #include <SecureOTA.h>
+#include <nvs_flash.h>
 
 /**
  * @file Done_Generator_code.ino
@@ -27,7 +25,9 @@ void setup() {
     EncoderInit();
     NextionInit();
     TimerInit();
-    has2wifi.Setup("badland");
+    nvs_flash_erase();
+    nvs_flash_init();
+    has2wifi.Setup("city");
     has2wifi.Send((String)(const char*)my["device_name"], "esp_version", String(FIRMWARE_VER));
     ota.setLogStream(Serial);
     ota.setOnSuccess([]() {

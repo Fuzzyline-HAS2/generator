@@ -34,7 +34,7 @@ void EncoderNeopixelOn(int neoNum){
   for(int i = 0; i < neoNum; i++)
     pixels[GAUGE].setPixelColor(i,pixels[GAUGE].Color(color[BLUE][0], color[BLUE][1], color[BLUE][2]));
   for(int i = neoNum; i < NumPixels[GAUGE]; i++)
-    pixels[GAUGE].setPixelColor(i,pixels[GAUGE].Color(color[GREEN][0],color[GREEN][1],color[GREEN][2])); 
+    pixels[GAUGE].setPixelColor(i,pixels[GAUGE].Color(color[GREEN][0],color[GREEN][1],color[GREEN][2]));
   pixels[GAUGE].show();
 }
 void NeoBlink(int neo, int neoColor, int cnt, int blinkTime){
