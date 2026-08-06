@@ -13,7 +13,7 @@
  *
  */
 
-#define FIRMWARE_VER 10
+#define FIRMWARE_VER 11
 #define PARTITION_VER 1
 #include "generator.h"
 
@@ -27,7 +27,7 @@ void setup() {
     TimerInit();
     nvs_flash_erase();
     nvs_flash_init();
-    has2wifi.Setup("city");
+    has2wifi.Setup("badland");
     has2wifi.Send((String)(const char*)my["device_name"], "esp_version", String(FIRMWARE_VER));
     ota.setLogStream(Serial);
     ota.setOnSuccess([]() {
